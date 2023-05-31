@@ -3,11 +3,14 @@ FROM node:current-bullseye-slim
 
 RUN npm i npm@latest @angular/cli -g
 
-WORKDIR /
+WORKDIR /app
 
-RUN ng new app \
-    && cd app \
-    && ng serve --host 0.0.0.0 --port 4200
+COPY entrypoint.sh ./
+
+RUN chmod +x entrypoint.sh
+RUN ng new app --skip-git --directory ./
+
+VOLUME /app
 
 # start app
-CMD ["npm", "run", "dev"]
+ENTRYPOINT ["/app/entrypoint.sh"]
