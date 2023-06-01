@@ -1,0 +1,22 @@
+[
+    {
+      "id": 1,
+      "nom": "Max Richet",
+      "text": "I've missed more than 9,000 shots in my career. I've lost almost 300 games. Twenty-six times, I've been trusted to take the game-winning shot and missed. I've failed over and over and over again in my life. And that is why I succeed."
+    },
+    {
+        "id": 2,
+        "nom": "Norbert Bozonnet",
+        "text": "Obstacles don’t have to stop you. If you run into a wall, don’t turn around and give up. Figure out how to climb it, go through it, or work around it."
+    },
+    {
+        "id": 3,
+        "nom": "Marcel Camille",
+        "text": "My attitude is that if you push me towards something that you think is a weakness, then I will turn that perceived weakness into a strength."
+    },
+    {
+        "id": 4,
+        "nom": "Guy Rossignol",
+        "text": "The minute you get away from fundamentals–whether it's proper technique, work ethic or mental preparation–the bottom can fall out of your game, your schoolwork, your job, whatever you're doing."
+    }
+]

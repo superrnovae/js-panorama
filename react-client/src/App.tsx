@@ -1,11 +1,16 @@
 import "./App.css";
 import characters from "../assets/images/characters";
 import logo from "../assets/images/logo.svg";
+import star from "../assets/images/star-thin.svg";
 import React from "react";
+import { TextAnniversaire } from "./types/anniversaire";
+import data from "../assets/textsAnniversaire.json";
 
-type AppState = { 
+type AppState = {
+  textsAnniversaire: TextAnniversaire[],
   images: string[], 
-  colors: string[], 
+  colors: string[],
+  currentText: number,
   currentImg: number,
   currentColor: number,
 };
@@ -19,10 +24,13 @@ class App extends React.Component<{}, AppState> {
 
     const images = [characters.a, characters.b, characters.c, characters.d];
     const colors = ['pink', 'blue', 'yellow', 'darkgreen'];
+    const textsAnniversaire = data;
 
     this.state = {
+      textsAnniversaire,
       images,
       colors,
+      currentText: 0,
       currentImg: 0,
       currentColor: 0
     }
@@ -32,7 +40,8 @@ class App extends React.Component<{}, AppState> {
     this.interval = setInterval(() => {
       this.changeImage();
       this.changeBackgroundColor();
-    }, 2000);
+      this.changeTextAnniversaire();
+    }, 3000);
   }
 
   componentWillUnmount() {
@@ -66,8 +75,24 @@ class App extends React.Component<{}, AppState> {
     this.setState({currentImg: newCurrentImg});
   }
 
+  changeTextAnniversaire() {
+    let newCurrentText = 0;
+
+    const { textsAnniversaire, currentText } = this.state;
+    const noOfTexts = textsAnniversaire.length;
+
+    if (currentText !== noOfTexts - 1) {
+      newCurrentText = currentText + 1;
+    }
+
+    this.setState({currentText: newCurrentText});
+
+  }
+
   render() {
-    const { images, colors, currentImg, currentColor } = this.state;
+    const { textsAnniversaire, images, colors, currentText, currentImg, currentColor } = this.state;
+    const color = colors[currentColor];
+    const anniversaire = textsAnniversaire[currentText];
 
     return (
       <div className="App">
@@ -76,25 +101,35 @@ class App extends React.Component<{}, AppState> {
           <span className="heading">{new Date().toLocaleString("fr-FR", { weekday:"long", year:"numeric", month:"short", day:"numeric"})}</span>
         </div>
         <div className="grid">
-          <div className="grid-col" style={{ backgroundColor: colors[currentColor] }}>
-            <img className="dynamicImage rotate" src={logo}></img>
-            <h1 id="name">Max Richet</h1>
+          <div className="grid-col relative" style={{ backgroundColor: color }}>
+            <img className="absolute star" id="first-star" src={star} />
+            <img className="absolute star" id="second-star" src={star}  />
+            <img className="absolute star" id="third-star" src={star}  />
+            <img className="dynamicImage rotate logo" src={logo}></img>
+            <h1 id="name">{anniversaire.nom}</h1>
           </div>
           <div className="grid-col">
-            <div className="boxx">
-              <p className="box">
-                I've missed more than 9,000 shots in my career. I've lost almost 300 games. Twenty-six times I've been trusted to take the game-winning shot and missed.
+            <div className="box">
+              <p>
+                { anniversaire.text }
               </p>
             </div>
-            <img className='dynamicImage flex-half' src={images[currentImg]} />
+            <div className="box">
+              <img className='dynamicImage flex-half' src={images[currentImg]} />
+            </div>
+            <div className="flex justify-center">
+              <div className="progressBar">
+                {currentText + 1}
+                <progress id="file" max={textsAnniversaire.length * 10} value={(currentText+1) * 10} />
+                {textsAnniversaire.length}
+              </div>
+            </div>
           </div>
         </div>
 
       </div>
     );
   }
-
-  
 }
-
+0
 export default App;
